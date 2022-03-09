@@ -1,6 +1,7 @@
 let myLibrary = [];
 let bookShelf = document.getElementById('bookShelf');
 let addButton = document.getElementById('addBookButton');
+let sumbit = document.getElementById("submitBook");
 
 function Book(title, author, pages, read) {
     // the book constructor
@@ -14,6 +15,10 @@ function Book(title, author, pages, read) {
 }
 
 addButton.addEventListener("click", formVisibility);
+sumbit.addEventListener("click", addBookToLibrary);
+sumbit.addEventListener("click", formVisibility);
+sumbit.addEventListener("click", createCard);
+
 
 function createCard() {
     // Displays content of myLibrary array
@@ -50,14 +55,20 @@ function createCard() {
     }
 }
 
-function addBookToLibrary(bookObj) {
+function addBookToLibrary() {
     // adds the book to myLibrary array
+    let bookTitle = document.getElementById("bookTitle").value;
+    let author = document.getElementById("author").value;
+    let pages = document.getElementById("pages").value;
+    let readYet = document.getElementById("readYet");
+    let bookObj = new Book(bookTitle, author, pages, readYet);
     myLibrary.splice(1, 0, bookObj);
+
     return myLibrary;
 }
 
 function formVisibility() {
-
+    // toggles visibility of the book creation form
     if (formDisplay.style.display == 'flex') {
         formDisplay.style.display = 'none';
         console.log("hide");

@@ -8,6 +8,10 @@ body {
 #bookShelf {
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding-top: 30px;
 }
 
 #bookInput {
@@ -28,11 +32,21 @@ body {
 
 .book {
     display: flex;
-    flex-direction: column;
-    border: 1px solid black;
-    border-radius: 20px;
+    background-image: url("dT76698rc.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 300px;
+    width: 350px;
 }
 
 .bookTitle {
     color: red;
+}
+
+.textCard {
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    padding-top: 50px;
+    max-width: 185px;
 }

@@ -2,6 +2,7 @@ let myLibrary = [];
 let bookShelf = document.getElementById('bookShelf');
 let addButton = document.getElementById('addBookButton');
 let sumbit = document.getElementById("submitBook");
+let checkReadYet = document.getElementById("readYet");
 
 function Book(title, author, pages, read) {
     // the book constructor
@@ -22,32 +23,38 @@ sumbit.addEventListener("click", createCard);
 
 function createCard() {
     // Displays content of myLibrary array
-
+    bookShelf.textContent = " ";
 
     for (i = 0; i < myLibrary.length; i++) {
         let cardDiv = document.createElement("div");
+        let textCard = document.createElement("div");
         let bookTitle = document.createElement("h3");
         let bookAuthor = document.createElement("p");
         let bookPages = document.createElement("p");
         let bookRead = document.createElement("p");
 
         cardDiv.classList.add("book");
+        textCard.classList.add("textCard");
+        cardDiv.appendChild(textCard);
 
         bookTitle.textContent = myLibrary[i].title;
         bookTitle.classList.add("bookTitle");
-        cardDiv.appendChild(bookTitle);
+        textCard.appendChild(bookTitle);
 
         bookAuthor.textContent = myLibrary[i].author;
         bookAuthor.classList.add("bookAuthor");
-        cardDiv.appendChild(bookAuthor);
+        textCard.appendChild(bookAuthor);
 
         bookPages.textContent = myLibrary[i].pages;
         bookPages.classList.add("bookPages");
-        cardDiv.appendChild(bookPages);
+        textCard.appendChild(bookPages);
 
+        if (checkReadYet.checked) {
+
+        }
         bookRead.textContent = myLibrary[i].read;
         bookRead.classList.add("bookRead");
-        cardDiv.appendChild(bookRead);
+        textCard.appendChild(bookRead);
 
         bookShelf.appendChild(cardDiv);
 
@@ -60,7 +67,11 @@ function addBookToLibrary() {
     let bookTitle = document.getElementById("bookTitle").value;
     let author = document.getElementById("author").value;
     let pages = document.getElementById("pages").value;
-    let readYet = document.getElementById("readYet");
+    if (checkReadYet.checked) {
+        readYet = "Read";
+    } else {
+        readYet = "Not Read";
+    }
     let bookObj = new Book(bookTitle, author, pages, readYet);
     myLibrary.splice(1, 0, bookObj);
 

@@ -19,11 +19,13 @@ addButton.addEventListener("click", formVisibility);
 sumbit.addEventListener("click", addBookToLibrary);
 sumbit.addEventListener("click", formVisibility);
 sumbit.addEventListener("click", createCard);
+createCard();
 
 
 function createCard() {
     // Displays content of myLibrary array
     bookShelf.textContent = " ";
+    pullFromShelf();
 
     for (i = 0; i < myLibrary.length; i++) {
         let cardDiv = document.createElement("div");
@@ -49,17 +51,14 @@ function createCard() {
         bookPages.classList.add("bookPages");
         textCard.appendChild(bookPages);
 
-        if (checkReadYet.checked) {
-
-        }
         bookRead.textContent = myLibrary[i].read;
         bookRead.classList.add("bookRead");
         textCard.appendChild(bookRead);
 
         bookShelf.appendChild(cardDiv);
 
-        console.log(myLibrary[i].info());
     }
+
 }
 
 function addBookToLibrary() {
@@ -74,7 +73,7 @@ function addBookToLibrary() {
     }
     let bookObj = new Book(bookTitle, author, pages, readYet);
     myLibrary.splice(1, 0, bookObj);
-
+    putOnShelf(bookObj);
     return myLibrary;
 }
 
@@ -87,4 +86,16 @@ function formVisibility() {
         formDisplay.style.display = 'flex';
         console.log("show");
     }
+}
+
+function putOnShelf() {
+    // Stores the array in local storage
+    window.localStorage.setItem("books", JSON.stringify(myLibrary));
+}
+
+function pullFromShelf() {
+    // Pulls the array from local storage
+    let parsedLibrary = JSON.parse(localStorage.getItem("books"));
+    myLibrary = parsedLibrary;
+    return myLibrary;
 }

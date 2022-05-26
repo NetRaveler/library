@@ -1,3 +1,4 @@
+// Currently gets rid of the info function when converted to JSON and back
 let myLibrary = [];
 let bookShelf = document.getElementById('bookShelf');
 let addButton = document.getElementById('addBookButton');
@@ -10,21 +11,34 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function() {
-        return (this.title + " by " + this.author + " " + this.pages + " pages " + this.read);
-    }
 }
-
+// Event Listeners
+// *************************************************
 addButton.addEventListener("click", formVisibility);
 sumbit.addEventListener("click", addBookToLibrary);
 sumbit.addEventListener("click", formVisibility);
 sumbit.addEventListener("click", createCard);
 createCard();
+// **************************************************
 
+function putOnShelf() {
+    // Stores the array in local storage
+    window.localStorage.setItem("books", JSON.stringify(myLibrary));
+}
+
+function pullFromShelf() {
+    // Pulls the array from local storage
+    myLibrary = JSON.parse(localStorage.getItem("books"));
+
+    return myLibrary;
+}
 
 function createCard() {
     // Displays content of myLibrary array
+    // Clears all books from the page
     bookShelf.textContent = " ";
+    // Pulls an available array from localstorage
+
     pullFromShelf();
 
     for (i = 0; i < myLibrary.length; i++) {
@@ -86,16 +100,4 @@ function formVisibility() {
         formDisplay.style.display = 'flex';
         console.log("show");
     }
-}
-
-function putOnShelf() {
-    // Stores the array in local storage
-    window.localStorage.setItem("books", JSON.stringify(myLibrary));
-}
-
-function pullFromShelf() {
-    // Pulls the array from local storage
-    let parsedLibrary = JSON.parse(localStorage.getItem("books"));
-    myLibrary = parsedLibrary;
-    return myLibrary;
 }

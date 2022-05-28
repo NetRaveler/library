@@ -4,6 +4,7 @@ let bookShelf = document.getElementById('bookShelf');
 let addButton = document.getElementById('addBookButton');
 let sumbit = document.getElementById("submitBook");
 let checkReadYet = document.getElementById("readYet");
+let removeToggle = document.getElementsByClassName("removeToggle");
 
 function Book(title, author, pages, read) {
     // the book constructor
@@ -18,8 +19,8 @@ addButton.addEventListener("click", formVisibility);
 sumbit.addEventListener("click", addBookToLibrary);
 sumbit.addEventListener("click", formVisibility);
 sumbit.addEventListener("click", createCard);
-createCard();
 // **************************************************
+createCard();
 
 function putOnShelf() {
     // Stores the array in local storage
@@ -40,40 +41,52 @@ function createCard() {
     // Pulls an available array from localstorage
     if (localStorage.length > 0) {
         pullFromShelf();
-    } else {
-
-        for (i = 0; i < myLibrary.length; i++) {
-            let cardDiv = document.createElement("div");
-            let textCard = document.createElement("div");
-            let bookTitle = document.createElement("h3");
-            let bookAuthor = document.createElement("p");
-            let bookPages = document.createElement("p");
-            let bookRead = document.createElement("p");
-
-            cardDiv.classList.add("book");
-            textCard.classList.add("textCard");
-            cardDiv.appendChild(textCard);
-
-            bookTitle.textContent = myLibrary[i].title;
-            bookTitle.classList.add("bookTitle");
-            textCard.appendChild(bookTitle);
-
-            bookAuthor.textContent = myLibrary[i].author;
-            bookAuthor.classList.add("bookAuthor");
-            textCard.appendChild(bookAuthor);
-
-            bookPages.textContent = myLibrary[i].pages;
-            bookPages.classList.add("bookPages");
-            textCard.appendChild(bookPages);
-
-            bookRead.textContent = myLibrary[i].read;
-            bookRead.classList.add("bookRead");
-            textCard.appendChild(bookRead);
-
-            bookShelf.appendChild(cardDiv);
-
-        }
     }
+
+    for (i = 0; i < myLibrary.length; i++) {
+        let cardDiv = document.createElement("div");
+        let textCard = document.createElement("div");
+        let bookTitle = document.createElement("h3");
+        let bookAuthor = document.createElement("p");
+        let bookPages = document.createElement("p");
+        let bookRead = document.createElement("p");
+        let buttonSpawn = document.createElement("input");
+
+        cardDiv.classList.add("book");
+        textCard.classList.add("textCard");
+        cardDiv.appendChild(textCard);
+
+        bookTitle.textContent = myLibrary[i].title;
+        bookTitle.classList.add("bookTitle");
+
+
+        textCard.appendChild(bookTitle);
+
+        bookAuthor.textContent = myLibrary[i].author;
+        bookAuthor.classList.add("bookAuthor");
+        textCard.appendChild(bookAuthor);
+
+        bookPages.textContent = myLibrary[i].pages;
+        bookPages.classList.add("bookPages");
+        textCard.appendChild(bookPages);
+
+        bookRead.textContent = myLibrary[i].read;
+        bookRead.classList.add("bookRead");
+        textCard.appendChild(bookRead);
+
+        buttonSpawn.setAttribute('id', myLibrary[i].title);
+        buttonSpawn.classList.add("removeToggle");
+        buttonSpawn.setAttribute("type", "button");
+        buttonSpawn.setAttribute("value", "Remove");
+        buttonSpawn.addEventListener("click", getTitleOfButton);
+        textCard.appendChild(buttonSpawn);
+
+
+
+        bookShelf.appendChild(cardDiv);
+
+    }
+
 
 }
 
@@ -102,4 +115,24 @@ function formVisibility() {
         formDisplay.style.display = 'flex';
         console.log("show");
     }
+}
+
+// I need a function that removes an item from an array when toggled.
+// I have the event listener, I need to bring in the button
+// What if when the card is created the ID can be the title field.
+// Now how to target the ID on the button click
+// What if I change the creation of my array to where the array takes the data and makes new books each time a function is called
+/* (title, author, pages, readStatus) -> create object(title, author, pages, readStatus, function) */
+function getTitleOfButton() {
+    let theTitle = this.getAttribute("id");
+    removeFromLibrary(theTitle);
+
+
+}
+
+function removeFromLibrary(title) {
+    let titleIndex = myLibrary.indexOf(title)
+    myLibrary.splice(titleIndex, 1);
+    putOnShelf();
+    createCard();
 }

@@ -38,39 +38,41 @@ function createCard() {
     // Clears all books from the page
     bookShelf.textContent = " ";
     // Pulls an available array from localstorage
+    if (localStorage.length > 0) {
+        pullFromShelf();
+    } else {
 
-    pullFromShelf();
+        for (i = 0; i < myLibrary.length; i++) {
+            let cardDiv = document.createElement("div");
+            let textCard = document.createElement("div");
+            let bookTitle = document.createElement("h3");
+            let bookAuthor = document.createElement("p");
+            let bookPages = document.createElement("p");
+            let bookRead = document.createElement("p");
 
-    for (i = 0; i < myLibrary.length; i++) {
-        let cardDiv = document.createElement("div");
-        let textCard = document.createElement("div");
-        let bookTitle = document.createElement("h3");
-        let bookAuthor = document.createElement("p");
-        let bookPages = document.createElement("p");
-        let bookRead = document.createElement("p");
+            cardDiv.classList.add("book");
+            textCard.classList.add("textCard");
+            cardDiv.appendChild(textCard);
 
-        cardDiv.classList.add("book");
-        textCard.classList.add("textCard");
-        cardDiv.appendChild(textCard);
+            bookTitle.textContent = myLibrary[i].title;
+            bookTitle.classList.add("bookTitle");
+            textCard.appendChild(bookTitle);
 
-        bookTitle.textContent = myLibrary[i].title;
-        bookTitle.classList.add("bookTitle");
-        textCard.appendChild(bookTitle);
+            bookAuthor.textContent = myLibrary[i].author;
+            bookAuthor.classList.add("bookAuthor");
+            textCard.appendChild(bookAuthor);
 
-        bookAuthor.textContent = myLibrary[i].author;
-        bookAuthor.classList.add("bookAuthor");
-        textCard.appendChild(bookAuthor);
+            bookPages.textContent = myLibrary[i].pages;
+            bookPages.classList.add("bookPages");
+            textCard.appendChild(bookPages);
 
-        bookPages.textContent = myLibrary[i].pages;
-        bookPages.classList.add("bookPages");
-        textCard.appendChild(bookPages);
+            bookRead.textContent = myLibrary[i].read;
+            bookRead.classList.add("bookRead");
+            textCard.appendChild(bookRead);
 
-        bookRead.textContent = myLibrary[i].read;
-        bookRead.classList.add("bookRead");
-        textCard.appendChild(bookRead);
+            bookShelf.appendChild(cardDiv);
 
-        bookShelf.appendChild(cardDiv);
-
+        }
     }
 
 }

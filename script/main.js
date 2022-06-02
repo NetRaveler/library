@@ -2,7 +2,7 @@
 let myLibrary = [];
 let bookShelf = document.getElementById('bookShelf');
 let addButton = document.getElementById('addBookButton');
-let sumbit = document.getElementById("submitBook");
+let sumbit = document.getElementById("submitBook"); // this misspelling makes me happy
 let checkReadYet = document.getElementById("readYet");
 let removeToggle = document.getElementsByClassName("removeToggle");
 
@@ -19,6 +19,7 @@ addButton.addEventListener("click", formVisibility);
 sumbit.addEventListener("click", addBookToLibrary);
 sumbit.addEventListener("click", formVisibility);
 sumbit.addEventListener("click", createCard);
+
 // **************************************************
 createCard();
 
@@ -78,7 +79,7 @@ function createCard() {
         buttonSpawn.classList.add("removeToggle");
         buttonSpawn.setAttribute("type", "button");
         buttonSpawn.setAttribute("value", "Remove");
-        buttonSpawn.addEventListener("click", getTitleOfButton);
+        buttonSpawn.addEventListener("click", deleteBook);
         textCard.appendChild(buttonSpawn);
 
 
@@ -123,16 +124,13 @@ function formVisibility() {
 // Now how to target the ID on the button click
 // What if I change the creation of my array to where the array takes the data and makes new books each time a function is called
 /* (title, author, pages, readStatus) -> create object(title, author, pages, readStatus, function) */
-function getTitleOfButton() {
-    let theTitle = this.getAttribute("id");
-    removeFromLibrary(theTitle);
-
-
-}
-
-function removeFromLibrary(title) {
-    let titleIndex = myLibrary.indexOf(title)
-    myLibrary.splice(titleIndex, 1);
+function deleteBook() {
+    let theTitle = this.id;
+    for (i = 0; i < myLibrary.length; i++) {
+        if (theTitle == myLibrary[i].title) {
+            myLibrary.splice(i, 1);
+        }
+    }
     putOnShelf();
     createCard();
 }

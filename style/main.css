@@ -32,7 +32,7 @@ body {
 
 .book {
     display: flex;
-    background-image: url("../images/dT76698rc.jpg");
+    background-image: url("../images/backgroundImage.jpg");
     background-size: contain;
     background-repeat: no-repeat;
     height: 300px;
